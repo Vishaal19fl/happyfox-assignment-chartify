@@ -14,10 +14,10 @@ import {
 
 import { ThemeProvider } from '@mui/material/styles';
 import { useMode, ColorModeContext } from './theme';
-import { Profile } from "./pages/profile/Profile";
-import NotFound from "./pages/notFound/NotFound";
+
+
 import { Landing } from "./pages/landing/Landing";
-import Team from "./scenes/team/index"
+
 import ChartPage from "./pages/chartPage/ChartPage";
 
 function App() {
@@ -56,30 +56,19 @@ function App() {
           element: <Home />,
         },
 
-        {
-          path: "/profile",
-          element: <Profile />,
-        },
+     
 
         {
           path: "/chart-page",
           element: <ChartPage />,
         },
 
-        {
-          path: '/not-found',
-          element: <NotFound />,
-        },
        
         {
           path: '/landing',
           element: <Landing />,
         },
     
-        {
-          path: '/team',
-          element: <Team />,
-        },
 
       ],
     },

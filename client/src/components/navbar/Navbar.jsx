@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.scss";
-import GoogleTranslate from "../googleTranslate/GoogleTranslate";
 import { FaBars, FaTimes } from 'react-icons/fa';
 
 function Navbar() {
