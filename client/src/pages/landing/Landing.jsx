@@ -20,7 +20,7 @@ export const Landing = () => {
 
           <button className='get-started-btn'>
           <Link to="/chart-page" className='link'>
-            Get Started </Link>
+           View Demo</Link>
           </button>
           
         </div>
