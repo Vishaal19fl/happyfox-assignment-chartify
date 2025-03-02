@@ -3,6 +3,9 @@ import { Box, Typography, Avatar, Chip, IconButton, Tooltip } from '@mui/materia
 import { styled } from '@mui/material/styles';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
+import DownloadIcon from '@mui/icons-material/Download';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import './ChartPage.scss';
 import MemberList from '../../components/memberList/MemberList';
 import Pretender from 'pretender';
@@ -155,20 +158,128 @@ const OrgChart = ({ employees, handleDrop, zoomLevel, setZoomLevel }) => {
   const handleZoomOut = () => {
     if (zoomLevel > -2) setZoomLevel(zoomLevel - 1);
   };
+  const handleDownloadPDF = async () => {
+    const chart = document.querySelector('.org-chart');
+    
+    const canvas = await html2canvas(chart, {
+      scale: 4,
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#ffffff',
+      onclone: (clonedDoc) => {
+        const clonedChart = clonedDoc.querySelector('.org-chart');
+        clonedChart.style.padding = '40px';
+        clonedChart.style.width = 'auto';
+        clonedChart.style.height = 'auto';
+        
+        // Hide team chips in the PDF
+        const teamChips = clonedDoc.querySelectorAll('.team-chip');
+        teamChips.forEach(chip => {
+          chip.style.display = 'none';
+        });
 
+        // Add team name as text instead
+        const employeeInfos = clonedDoc.querySelectorAll('.employee-info');
+        employeeInfos.forEach(info => {
+          const teamChip = info.querySelector('.team-chip');
+          if (teamChip) {
+            const teamName = teamChip.textContent;
+            const teamText = document.createElement('div');
+            teamText.textContent = teamName;
+            teamText.style.fontSize = '12px';
+            teamText.style.fontWeight = '800';
+            teamText.style.color = '#666';
+            teamText.style.marginTop = '4px';
+            info.appendChild(teamText);
+          }
+        });
+      }
+    });
+    const imgWidth = 210; 
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    
+    // First add the chart image
+    pdf.addImage(
+      canvas.toDataURL('image/png'),
+      'PNG',
+      0,
+      45,
+      imgWidth,
+      imgHeight
+    );
+    
+    // Add header content
+    pdf.setFontSize(20);
+    pdf.setTextColor(219, 98, 0);
+    pdf.text('HappyFox Chartify Document', 105, 20, { align: 'center' });
+    
+    pdf.setFontSize(16);
+    pdf.setTextColor(51, 51, 51);
+    pdf.text('Organization Chart', 105, 30, { align: 'center' });
+    
+    pdf.setFontSize(10);
+    pdf.setTextColor(128, 128, 128);
+    const date = new Date().toLocaleDateString();
+    pdf.text(`Generated on: ${date}`, 105, 38, { align: 'center' });
+    
+    // Add horizontal line
+    pdf.setDrawColor(219, 98, 0);
+    pdf.setLineWidth(0.5);
+    pdf.line(20, 42, 190, 42);
+    
+    // Add decorative border last to ensure it's on top
+    // Single orange border
+    pdf.setDrawColor(219, 98, 0);
+    pdf.setLineWidth(1);
+    pdf.rect(10, 10, 190, 277);
+    
+    // Corner decorations
+    pdf.setDrawColor(219, 98, 0);
+    pdf.setLineWidth(1);
+    // Top-left
+    pdf.line(10, 15, 20, 15);
+    pdf.line(15, 10, 15, 20);
+    // Top-right
+    pdf.line(190, 15, 200, 15);
+    pdf.line(195, 10, 195, 20);
+    // Bottom-left
+    pdf.line(10, 282, 20, 282);
+    pdf.line(15, 277, 15, 287);
+    // Bottom-right
+    pdf.line(190, 282, 200, 282);
+    pdf.line(195, 277, 195, 287);
+    
+    pdf.save('happyfox-organization-chart.pdf');
+  };
   return (
     <div className="org-chart-container">
-      <div className="zoom-controls">
-        <Tooltip title="Zoom Out">
-          <IconButton onClick={handleZoomOut} disabled={zoomLevel <= -2}>
-            <ZoomOutIcon />
-          </IconButton>
+      <div style={{ display: 'flex', gap: '20px', alignItems: 'center', padding: '10px' }}>
+        <div className="zoom-controls" style={{ display: 'flex', alignItems: 'center' }}>
+          <Tooltip title="Zoom Out">
+            <IconButton onClick={handleZoomOut} disabled={zoomLevel <= -2}>
+              <ZoomOutIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Zoom In">
+            <IconButton onClick={handleZoomIn} disabled={zoomLevel >= 3}>
+              <ZoomInIcon />
+            </IconButton>
+          </Tooltip>
+        </div>
+        <div>
+        
+        <Tooltip title="Download PDF">
+          <Box 
+            component="button"
+            onClick={handleDownloadPDF}
+            className="download-pdf-btn"
+          >
+            <DownloadIcon />
+            Download PDF
+          </Box>
         </Tooltip>
-        <Tooltip title="Zoom In">
-          <IconButton onClick={handleZoomIn} disabled={zoomLevel >= 3}>
-            <ZoomInIcon />
-          </IconButton>
-        </Tooltip>
+        </div>
       </div>
       <div className="org-chart" style={{ padding: `${30 + (zoomLevel * 5)}px` }}>
         <div className="org-chart-background"></div>
