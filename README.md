@@ -7,7 +7,7 @@ Chartify is an interactive employee organization chart visualization tool. It al
 - 🔍 **Employee List & Search**: Displays a list of employees with search and filter options.
 - 📊 **Interactive Org Chart**: Visualizes the employee hierarchy based on manager relationships.
 - 🔄 **Drag & Drop**: Allows users to change reporting structures by dragging and dropping employees.
-- 🔌 **API Integration**: Supports fetching employee data from a mock API.
+- 🔌 **API Integration**: Supports fetching employee data from a mock API using PretenderJS.
 - 📥 **Download as PDF**: Enables exporting the org chart as a PDF file.
 
 ## Assigned Chart Page
