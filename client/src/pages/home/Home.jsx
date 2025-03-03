@@ -21,7 +21,7 @@ function Home() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const textItems = [
-    "Innovation", "Technology", "Creativity", "Future", "Design", "Efficiency", "Performance", "Speed", "Collaboration", "Solutions"
+    "Teamwork", "Hierarchy", "Collaboration", "Efficiency", "Organization", "Visualization", "Structure", "Productivity", "Alignment", "Management"
   ];
 
   const { isLoading, error, data, refetch } = useQuery({
