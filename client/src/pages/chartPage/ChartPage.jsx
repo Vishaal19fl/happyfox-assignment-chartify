@@ -359,6 +359,10 @@ const ChartPage = () => {
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
  
   useEffect(() => {
     const fetchEmployees = async () => {
