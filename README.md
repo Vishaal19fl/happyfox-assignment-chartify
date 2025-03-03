@@ -59,7 +59,7 @@ The application will be available at `http://localhost:5173/`.
 - **MUI (Material-UI)** (for UI components)
 - **html2canvas & jsPDF** (for PDF export)
 - **Pretender** (for API mocking)
-- **React-Beautiful-DnD** (for drag-and-drop functionality)
+
 
 
 
