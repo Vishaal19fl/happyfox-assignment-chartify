@@ -1,4 +1,4 @@
-# Chartify - HappyFox Assignment 🚀
+# Chartify - HappyFox Assignment 🦊
 
 Chartify is an interactive employee organization chart visualization tool. It allows users to view, filter, and update the employee hierarchy dynamically with drag-and-drop functionality. Additionally, users can export the chart as a PDF.
 
