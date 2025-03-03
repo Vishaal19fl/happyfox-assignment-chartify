@@ -1,33 +1,80 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Avatar, Chip, IconButton, Tooltip } from '@mui/material';
+import { Box, Typography, Avatar, Chip, IconButton, Tooltip, Snackbar, Alert } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 import DownloadIcon from '@mui/icons-material/Download';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import './ChartPage.scss';
 import MemberList from '../../components/memberList/MemberList';
 import Pretender from 'pretender';
+import { employeeData } from '../../data';
+
+// Toast component for success notifications
+const SuccessToast = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: '20px 16px',
+  borderRadius: '8px',
+  backgroundColor: 'white',
+  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+  maxWidth: '400px',
+  animation: 'slideIn 0.3s ease-out',
+  position: 'relative',
+  overflow: 'hidden',
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    height: '100%',
+    width: '4px',
+    backgroundColor: '#4caf50',
+  },
+  '@keyframes slideIn': {
+    '0%': {
+      transform: 'translateY(20px)',
+      opacity: 0,
+    },
+    '100%': {
+      transform: 'translateY(0)',
+      opacity: 1,
+    },
+  },
+}));
+
+// Animation for the checkmark
+const AnimatedCheckIcon = styled(CheckCircleIcon)(({ theme }) => ({
+  color: '#4caf50',
+  fontSize: '24px',
+  marginRight: '12px',
+  animation: 'popAndSpin 0.5s ease-out',
+  '@keyframes popAndSpin': {
+    '0%': {
+      transform: 'scale(0) rotate(-90deg)',
+    },
+    '50%': {
+      transform: 'scale(1.2) rotate(0deg)',
+    },
+    '100%': {
+      transform: 'scale(1) rotate(0deg)',
+    },
+  },
+}));
+
+// At the start of the file, after imports
+let server;
+
+// Before creating new server, shutdown existing one
+if (server) {
+  server.shutdown();
+}
 
 // Setup Pretender server to mock API endpoints
-const server = new Pretender(function() {
+server = new Pretender(function() {
   
-  const employeeData = [
-    { id: 1, name: "Vishaal Krishna", designation: "CEO", team: "Executive", managerId: null, image: "/img/m1.png" },
-    { id: 2, name: "Arun Kumar", designation: "CTO", team: "Executive", managerId: 1, image: "/img/m2.png" },
-    { id: 3, name: "Priya Ramesh", designation: "CFO", team: "Finance", managerId: 1, image: "/img/w1.png" },
-    { id: 4, name: "Vikram Patel", designation: "VP of Engineering", team: "Engineering", managerId: 2, image: "/img/m3.png" },
-    { id: 5, name: "Sunita Verma", designation: "VP of IT", team: "IT", managerId: 2, image: "/img/w2.png" },
-    { id: 6, name: "Manoj Sekar", designation: "VP of Finance", team: "Finance", managerId: 3, image: "/img/m4.png" },
-    { id: 7, name: "Anjali", designation: "Engineering Manager", team: "Engineering", managerId: 4, image: "/img/m5.png" },
-    { id: 8, name: "Ramesh Yadav", designation: "IT Manager", team: "IT", managerId: 5, image: "/img/w3.png" },
-    { id: 9, name: "Kavita", designation: "Financial Analyst", team: "Finance", managerId: 6, image: "/img/m6.png" },
-    { id: 10, name: "Suresh Kumar", designation: "Software Engineer", team: "Engineering", managerId: 7, image: "/img/w4.png" },
-    { id: 11, name: "Neha Sri", designation: "System Administrator", team: "IT", managerId: 8, image: "/img/m7.png" },
-    { id: 12, name: "Mohammed Shakithiyan", designation: "Accountant", team: "Finance", managerId: 9, image: "/img/w5.png" },
-];
-
 
   // GET endpoint to fetch all employees
   this.get('/api/employees', () => {
@@ -40,13 +87,17 @@ const server = new Pretender(function() {
     const { managerId } = JSON.parse(request.requestBody);
     
     const employee = employeeData.find(emp => emp.id === id);
-    if (employee) {
+    const newManager = employeeData.find(emp => emp.id === managerId);
+    
+    if (employee && newManager) {
       employee.managerId = managerId;
     }
     
     return [200, { 'Content-Type': 'application/json' }, JSON.stringify({ 
       success: true, 
-      message: `Updated employee ${id}'s manager to ${managerId}` 
+      message: `Updated employee ${employee.name} (ID: ${employee.id}) manager to ${newManager.name} (ID: ${newManager.id})`,
+      employeeName: employee.name,
+      managerName: newManager.name
     })];
   });
 });
@@ -308,6 +359,10 @@ const ChartPage = () => {
   const [teams, setTeams] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [zoomLevel, setZoomLevel] = useState(0); // 0 is default, range from -2 to 3
+  
+  // Toast notification state
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   // Fetch employees from API on component mount
   useEffect(() => {
@@ -334,6 +389,14 @@ const ChartPage = () => {
     setTeams(uniqueTeams);
   }, [employees]);
 
+  // Handle toast close
+  const handleToastClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setToastOpen(false);
+  };
+
   // Function to handle employee drag and drop to change manager
   const handleDrop = async (employeeId, newManagerId) => {
     // Prevent setting own manager or creating circular references
@@ -359,7 +422,12 @@ const ChartPage = () => {
       });
       
       const result = await response.json();
-      console.log(result.message);
+      
+      // Show toast notification instead of console log
+      setToastMessage(`${result.employeeName} is now reporting to ${result.managerName}`);
+      setToastOpen(true);
+      
+      console.log(result.message); // Keep for debugging
     } catch (err) {
       console.error('Error updating employee manager:', err);
       // Fetch fresh data to reset state if API call fails
@@ -428,6 +496,18 @@ const ChartPage = () => {
   return (
     <Box className="org-chart-page" sx={{ padding: '2.9rem 0 0 0', display: 'flex', flexDirection: 'column', height: '100vh' }}>
       
+      {/* Toast Notification */}
+      <Snackbar
+        open={toastOpen}
+        autoHideDuration={4000}
+        onClose={handleToastClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <SuccessToast>
+          <AnimatedCheckIcon />
+          <Typography sx={{ fontWeight: 500 }}>{toastMessage}</Typography>
+        </SuccessToast>
+      </Snackbar>
       
       <Box className="org-chart-layout" sx={{ display: 'flex', flex: 1, overflow: 'hidden'}}>
         
@@ -478,6 +558,12 @@ const ChartPage = () => {
     </Box>
   );
 };
+
+// Add some CSS to your ChartPage.scss file for toast styling
+// You can also add this directly to your component using the styled API if preferred
+/*
+
+*/
 
 // Clean up Pretender server when component unmounts
 // This would typically be in a useEffect cleanup function
