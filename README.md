@@ -1,4 +1,4 @@
-# Chartify - HappyFox Assignment
+# Chartify - HappyFox Assignment 🚀
 
 Chartify is an interactive employee organization chart visualization tool. It allows users to view, filter, and update the employee hierarchy dynamically with drag-and-drop functionality. Additionally, users can export the chart as a PDF.
 
@@ -9,6 +9,14 @@ Chartify is an interactive employee organization chart visualization tool. It al
 - **Drag & Drop**: Allows users to change reporting structures by dragging and dropping employees.
 - **API Integration**: Supports fetching employee data from a mock API.
 - **Download as PDF**: Enables exporting the org chart as a PDF file.
+
+## Assigned Chart Page
+
+![Chartify Preview](chartpage.png)
+
+## Downloaded PDF Screenshot
+
+![PDF Preview](pdfss1.png)
 
 ## Installation
 
@@ -50,7 +58,7 @@ The application will be available at `http://localhost:3000/`.
 - **SCSS** (for styling)
 - **MUI (Material-UI)** (for UI components)
 - **html2canvas & jsPDF** (for PDF export)
-- **MirageJS / Pretender** (for API mocking)
+- **Pretender** (for API mocking)
 - **React-Beautiful-DnD** (for drag-and-drop functionality)
 
 ## Deployment
