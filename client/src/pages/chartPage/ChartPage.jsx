@@ -12,7 +12,7 @@ import MemberList from '../../components/memberList/MemberList';
 import Pretender from 'pretender';
 import { employeeData } from '../../data';
 
-// Toast component for success notifications
+
 const SuccessToast = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -45,7 +45,7 @@ const SuccessToast = styled(Box)(({ theme }) => ({
   },
 }));
 
-// Animation for the checkmark
+
 const AnimatedCheckIcon = styled(CheckCircleIcon)(({ theme }) => ({
   color: '#4caf50',
   fontSize: '24px',
@@ -64,24 +64,21 @@ const AnimatedCheckIcon = styled(CheckCircleIcon)(({ theme }) => ({
   },
 }));
 
-// At the start of the file, after imports
+
 let server;
 
-// Before creating new server, shutdown existing one
+
 if (server) {
   server.shutdown();
 }
 
-// Setup Pretender server to mock API endpoints
+
 server = new Pretender(function() {
   
-
-  // GET endpoint to fetch all employees
   this.get('/api/employees', () => {
     return [200, { 'Content-Type': 'application/json' }, JSON.stringify(employeeData)];
   });
 
-  // PUT endpoint to update an employee's manager
   this.put('/api/employees/:id/manager', (request) => {
     const id = parseInt(request.params.id);
     const { managerId } = JSON.parse(request.requestBody);
@@ -127,9 +124,9 @@ const TeamChip = styled(Chip)(({ theme, team }) => {
   };
 });
 
-// EmployeeNode component for the org chart (with reduced size)
+
 const EmployeeNode = ({ employee, employees, handleDrop, onDragStart, zoomLevel }) => {
-  // Find direct reports of this employee
+  
   const directReports = employees.filter(emp => emp.managerId === employee.id);
 
   const onDragOver = (e) => {
@@ -141,9 +138,9 @@ const EmployeeNode = ({ employee, employees, handleDrop, onDragStart, zoomLevel 
     handleDrop(draggedEmployeeId, employee.id);
   };
 
-  // Calculate size scaling based on zoomLevel
-  const avatarSize = 40 + (zoomLevel * 10); // Base size 40px, adjust by 10px per zoom level
-  const nodeWidth = 140 + (zoomLevel * 20); // Base width 140px, adjust by 20px per zoom level
+
+  const avatarSize = 40 + (zoomLevel * 10); 
+  const nodeWidth = 140 + (zoomLevel * 20); 
   
   return (
     <div className="org-node-container">
@@ -194,9 +191,9 @@ const EmployeeNode = ({ employee, employees, handleDrop, onDragStart, zoomLevel 
   );
 };
 
-// OrgChart component with zoom controls
+
 const OrgChart = ({ employees, handleDrop, zoomLevel, setZoomLevel }) => {
-  // Find the root employee (CEO)
+ 
   const rootEmployee = employees.find(emp => emp.managerId === null);
 
   const onDragStart = (e, employeeId) => {
@@ -224,13 +221,13 @@ const OrgChart = ({ employees, handleDrop, zoomLevel, setZoomLevel }) => {
         clonedChart.style.width = 'auto';
         clonedChart.style.height = 'auto';
         
-        // Hide team chips in the PDF
+  
         const teamChips = clonedDoc.querySelectorAll('.team-chip');
         teamChips.forEach(chip => {
           chip.style.display = 'none';
         });
 
-        // Add team name as text instead
+  
         const employeeInfos = clonedDoc.querySelectorAll('.employee-info');
         employeeInfos.forEach(info => {
           const teamChip = info.querySelector('.team-chip');
@@ -251,7 +248,7 @@ const OrgChart = ({ employees, handleDrop, zoomLevel, setZoomLevel }) => {
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
     const pdf = new jsPDF('p', 'mm', 'a4');
     
-    // First add the chart image
+  
     pdf.addImage(
       canvas.toDataURL('image/png'),
       'PNG',
@@ -261,7 +258,7 @@ const OrgChart = ({ employees, handleDrop, zoomLevel, setZoomLevel }) => {
       imgHeight
     );
     
-    // Add header content
+
     pdf.setFontSize(20);
     pdf.setTextColor(219, 98, 0);
     pdf.text('HappyFox Chartify Document', 105, 20, { align: 'center' });
@@ -275,30 +272,28 @@ const OrgChart = ({ employees, handleDrop, zoomLevel, setZoomLevel }) => {
     const date = new Date().toLocaleDateString();
     pdf.text(`Generated on: ${date}`, 105, 38, { align: 'center' });
     
-    // Add horizontal line
     pdf.setDrawColor(219, 98, 0);
     pdf.setLineWidth(0.5);
     pdf.line(20, 42, 190, 42);
     
-    // Add decorative border last to ensure it's on top
-    // Single orange border
+
     pdf.setDrawColor(219, 98, 0);
     pdf.setLineWidth(1);
     pdf.rect(10, 10, 190, 277);
     
-    // Corner decorations
+
     pdf.setDrawColor(219, 98, 0);
     pdf.setLineWidth(1);
-    // Top-left
+
     pdf.line(10, 15, 20, 15);
     pdf.line(15, 10, 15, 20);
-    // Top-right
+ 
     pdf.line(190, 15, 200, 15);
     pdf.line(195, 10, 195, 20);
-    // Bottom-left
+ 
     pdf.line(10, 282, 20, 282);
     pdf.line(15, 277, 15, 287);
-    // Bottom-right
+
     pdf.line(190, 282, 200, 282);
     pdf.line(195, 277, 195, 287);
     
@@ -349,7 +344,7 @@ const OrgChart = ({ employees, handleDrop, zoomLevel, setZoomLevel }) => {
   );
 };
 
-// Main OrgChart page component
+
 const ChartPage = () => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -360,11 +355,11 @@ const ChartPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [zoomLevel, setZoomLevel] = useState(0); // 0 is default, range from -2 to 3
   
-  // Toast notification state
+ 
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
-  // Fetch employees from API on component mount
+ 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -383,13 +378,13 @@ const ChartPage = () => {
     fetchEmployees();
   }, []);
 
-  // Extract unique teams for the filter dropdown
+  
   useEffect(() => {
     const uniqueTeams = [...new Set(employees.map(emp => emp.team))];
     setTeams(uniqueTeams);
   }, [employees]);
 
-  // Handle toast close
+
   const handleToastClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -397,22 +392,22 @@ const ChartPage = () => {
     setToastOpen(false);
   };
 
-  // Function to handle employee drag and drop to change manager
+  
   const handleDrop = async (employeeId, newManagerId) => {
-    // Prevent setting own manager or creating circular references
+    
     if (employeeId === newManagerId || wouldCreateCircularReference(employeeId, newManagerId)) {
       return;
     }
 
     try {
-      // Optimistic UI update
+  
       setEmployees(prevEmployees => 
         prevEmployees.map(emp => 
           emp.id === employeeId ? { ...emp, managerId: newManagerId } : emp
         )
       );
       
-      // Call API to update the employee's manager
+  
       const response = await fetch(`/api/employees/${employeeId}/manager`, {
         method: 'PUT',
         headers: {
@@ -423,21 +418,20 @@ const ChartPage = () => {
       
       const result = await response.json();
       
-      // Show toast notification instead of console log
       setToastMessage(`${result.employeeName} is now reporting to ${result.managerName}`);
       setToastOpen(true);
       
-      console.log(result.message); // Keep for debugging
+      console.log(result.message); 
     } catch (err) {
       console.error('Error updating employee manager:', err);
-      // Fetch fresh data to reset state if API call fails
+     
       const response = await fetch('/api/employees');
       const data = await response.json();
       setEmployees(data);
     }
   };
 
-  // Check if setting a new manager would create a circular reference
+  
   const wouldCreateCircularReference = (employeeId, newManagerId) => {
     let currentManagerId = newManagerId;
     while (currentManagerId !== null) {
@@ -450,13 +444,12 @@ const ChartPage = () => {
     return false;
   };
 
-  // Filter employees for the org chart based on selected team
+  
   const filteredChartEmployees = selectedTeam
     ? employees.filter(emp => {
-        // Include employees from selected team and their managers
+        
         if (emp.team === selectedTeam) return true;
         
-        // Check if this employee is a manager of any employee in the selected team
         const isManager = employees
           .filter(e => e.team === selectedTeam)
           .some(e => {
@@ -496,7 +489,6 @@ const ChartPage = () => {
   return (
     <Box className="org-chart-page" sx={{ padding: '2.9rem 0 0 0', display: 'flex', flexDirection: 'column', height: '100vh' }}>
       
-      {/* Toast Notification */}
       <Snackbar
         open={toastOpen}
         autoHideDuration={4000}
@@ -559,15 +551,7 @@ const ChartPage = () => {
   );
 };
 
-// Add some CSS to your ChartPage.scss file for toast styling
-// You can also add this directly to your component using the styled API if preferred
-/*
 
-*/
-
-// Clean up Pretender server when component unmounts
-// This would typically be in a useEffect cleanup function
-// but for simplicity we're adding it here
 window.addEventListener('beforeunload', () => {
   if (server) {
     server.shutdown();
