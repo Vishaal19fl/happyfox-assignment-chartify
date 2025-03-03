@@ -67,7 +67,7 @@ const MemberList = ({
   onTeamChange,
   teams 
 }) => {
-  // Get team color
+
   const getTeamColor = (team) => {
     switch (team) {
       case 'Executive': return '#4caf50';
@@ -82,15 +82,14 @@ const MemberList = ({
     e.dataTransfer.setData('employeeId', employeeId);
   };
 
-  // Filter employees based on search and team selection
+
   let filteredEmployees = employees;
   
-  // Filter by team if a team is selected
   if (selectedTeam) {
     filteredEmployees = filteredEmployees.filter(emp => emp.team === selectedTeam);
   }
   
-  // Filter by search term
+
   if (searchTerm) {
     const searchLower = searchTerm.toLowerCase();
     filteredEmployees = filteredEmployees.filter(emp => 
@@ -104,7 +103,7 @@ const MemberList = ({
     <Box 
       className={`sidebar ${isOpen ? 'open' : 'closed'}`}
       sx={{ 
-        backgroundColor: '#333333', // Dark grey background
+        backgroundColor: '#333333',
         height: 'calc(100vh - 5rem)',
         overflow: 'scroll',
         top: 0,
@@ -126,7 +125,7 @@ const MemberList = ({
           alignItems: 'center',
           justifyContent: isOpen ? 'space-between' : 'center',
           padding: isOpen ? '0px' : '12px 0',
-          background: 'linear-gradient(135deg, #222222,rgb(50, 50, 50))', // Darker gradient
+          background: 'linear-gradient(135deg, #222222,rgb(50, 50, 50))', 
           color: 'white'
         }}
       >
@@ -156,14 +155,14 @@ const MemberList = ({
             display: 'flex',
             flexDirection: 'column',
             height: '100%',
-            backgroundColor: '#333333' // Dark grey background
+            backgroundColor: '#333333' 
           }}
         >
           <Box 
             className="search-filter-container"
             sx={{
               padding: '12px',
-              backgroundColor: '#444444' // Slightly lighter dark grey
+              backgroundColor: '#444444' 
             }}
           >
             <StyledSearchInput
@@ -224,7 +223,7 @@ const MemberList = ({
               flex: 1,
               overflowY: 'auto',
               padding: '12px',
-              backgroundColor: '#333333' // Dark grey background
+              backgroundColor: '#333333' 
             }}
           >
             {filteredEmployees.map(employee => (
@@ -241,7 +240,7 @@ const MemberList = ({
                   borderRadius: '8px',
                   cursor: 'move',
                   transition: 'all 0.3s ease',
-                  backgroundColor: '#444444', // Darker card background
+                  backgroundColor: '#444444', 
                   '&:hover': {
                     boxShadow: '0 8px 16px rgba(0, 0, 0, 0.3)',
                     transform: 'translateY(-2px)'
@@ -276,7 +275,7 @@ const MemberList = ({
                       sx={{
                         fontWeight: 600,
                         marginBottom: '2px',
-                        color: 'white', // White text
+                        color: 'white', 
                         fontSize: '0.95rem'
                       }}
                     >
@@ -286,7 +285,7 @@ const MemberList = ({
                       variant="body2" 
                       className="employee-designation"
                       sx={{
-                        color: 'rgba(255, 255, 255, 0.7)', // Light white text
+                        color: 'rgba(255, 255, 255, 0.7)', 
                         fontSize: '0.8rem',
                         display: 'flex',
                         alignItems: 'center',
@@ -300,7 +299,7 @@ const MemberList = ({
                       variant="body2" 
                       className="employee-team"
                       sx={{
-                        color: 'rgba(255, 255, 255, 0.7)', // Light white text
+                        color: 'rgba(255, 255, 255, 0.7)', 
                         fontSize: '0.8rem',
                         display: 'flex',
                         alignItems: 'center',
