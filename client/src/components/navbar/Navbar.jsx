@@ -54,7 +54,7 @@ function Navbar() {
 
           <div className="user" onClick={() => setOpen(!open)}>
             <img className="profilepic" src="/img/vishaal2.jpg" alt="" />
-            <span>Vishaal</span>
+            <span>Vishaal Krishna</span>
             {open && (
               <div className="options">
                 <Link className="link" to="/profile">
