@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { Landing } from "../landing/Landing";
 import Marquee from "react-fast-marquee";
+import FeaturesSection from "../../components/features/Features";
 
 
 function Home() {
@@ -91,7 +92,7 @@ function Home() {
   
 
 
-
+<FeaturesSection/>
      
 
      

@@ -1,0 +1,162 @@
+.employee-org-section {
+    position: relative;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('/img/greybg.jpg');
+    background-size: cover;
+    color: white;
+    padding: 80px 20px 120px;
+    overflow: hidden;
+  
+    .heading {
+      text-align: center;
+      margin-bottom: 60px;
+  
+      h2 {
+        font-size: 28px;
+        font-weight: 500;
+        margin: 0;
+        line-height: 1.3;
+      }
+    }
+  
+    .features-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+  
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+    }
+  
+    .feature-card {
+      background-color: #36373a;
+      border-radius: 8px;
+      padding: 24px;
+      display: flex;
+      align-items: flex-start;
+  
+      .feature-icon {
+        margin-right: 16px;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+  
+        &.search {
+          color: #4da6ff;
+        }
+  
+        &.chart {
+          color: #00d1b2;
+        }
+  
+        &.drag {
+          color: #ff6b6b;
+        }
+  
+        &.download {
+          color: #ff9f43;
+        }
+      }
+  
+      .feature-content {
+        flex: 1;
+  
+        h3 {
+          font-size: 18px;
+          font-weight: 500;
+          margin: 0 0 8px 0;
+        }
+  
+        p {
+          font-size: 14px;
+          color: #a8aab9;
+          line-height: 1.5;
+          margin: 0;
+        }
+      }
+    }
+  
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 48px;
+  
+      button {
+        padding: 10px 24px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+  
+        &.btn-primary {
+          background-color: #ff6c00;
+          color: white;
+  
+          &:hover {
+            background-color: #ff8124;
+          }
+        }
+  
+        &.btn-secondary {
+          background-color: white;
+          color: #1e2133;
+  
+          &:hover {
+            background-color: #f0f0f0;
+          }
+        }
+      }
+    }
+  
+    .wave-decoration {
+      position: absolute;
+      transform: rotate(180deg);
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+  
+      svg {
+        display: block;
+        width: 100%;
+        height: 60px;
+  
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
+  
+  
+  [class^="icon-"] {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  .icon-search {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234da6ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+  }
+  
+  .icon-chart {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300d1b2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z'/%3E%3Cpolyline points='3.27 6.96 12 12.01 20.73 6.96'/%3E%3Cline x1='12' y1='22.08' x2='12' y2='12'/%3E%3C/svg%3E");
+  }
+  
+  .icon-drag {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6b6b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 9l-3 3 3 3'/%3E%3Cpath d='M9 5l3-3 3 3'/%3E%3Cpath d='M15 19l3 3 3-3'/%3E%3Cpath d='M19 9l3 3-3 3'/%3E%3Cpath d='M2 12h20'/%3E%3Cpath d='M12 2v20'/%3E%3C/svg%3E");
+  }
+  
+  .icon-download {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff9f43' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpolyline points='7 10 12 15 17 10'/%3E%3Cline x1='12' y1='15' x2='12' y2='3'/%3E%3C/svg%3E");
+  }
