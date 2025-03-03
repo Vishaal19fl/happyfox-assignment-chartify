@@ -2,6 +2,9 @@
 
 Chartify is an interactive employee organization chart visualization tool. It allows users to view, filter, and update the employee hierarchy dynamically with drag-and-drop functionality. Additionally, users can export the chart as a PDF.
 
+Link to webapp : [happyfox-chartify.vercel.app](https://happyfox-chartify.vercel.app/)
+Link to assigned page : https://happyfox-chartify.vercel.app/chart-page
+
 ## Features
 
 - 🔍 **Employee List & Search**: Displays a list of employees with search and filter options.
