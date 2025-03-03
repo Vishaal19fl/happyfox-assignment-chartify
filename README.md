@@ -61,24 +61,5 @@ The application will be available at `http://localhost:5173/`.
 - **Pretender** (for API mocking)
 - **React-Beautiful-DnD** (for drag-and-drop functionality)
 
-## Deployment
 
-To deploy the application, use Vercel or Netlify:
-
-```sh
-npm run build
-```
-
-Then follow the deployment instructions for your chosen platform.
-
-## Contributing
-
-1. Fork the repository.
-2. Create a new branch (`feature-branch`).
-3. Commit your changes.
-4. Push to your fork and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License.
 
