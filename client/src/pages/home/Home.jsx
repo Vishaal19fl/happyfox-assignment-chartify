@@ -82,7 +82,9 @@ function Home() {
       <p>
         Chartify fosters collaboration by allowing teams to work together on organizational updates, ensuring everyone stays aligned and informed.
       </p>
+      <Link className="link" to="/chart-page">
       <button className="get-started-btn">Get Started with Chartify</button>
+      </Link>
     </div>
     <div className="item">
       <video src="/img/chartifyvid1.mp4" autoPlay muted loop playsInline />

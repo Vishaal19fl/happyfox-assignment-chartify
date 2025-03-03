@@ -18,11 +18,11 @@ export const Landing = () => {
     Create, visualize, and update your organization chart effortlessly. Empower your team with a clear and dynamic hierarchy.
 </p>
 
-          <button className='get-started-btn'>
-          <Link to="/chart-page" className='link'>
-           View Demo</Link>
+<Link to="/chart-page" className='link'>  <button className='get-started-btn'>
+         
+           View Demo
           </button>
-          
+          </Link>
         </div>
 
         <div className='image'>
