@@ -63,6 +63,7 @@ The application will be available at `http://localhost:5173/`.
 - **MUI (Material-UI)** (for UI components)
 - **html2canvas & jsPDF** (for PDF export)
 - **Pretender** (for API mocking)
+- **react-toastify** (for alerts or notifications)
 
 
 
