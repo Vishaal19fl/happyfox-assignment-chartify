@@ -71,7 +71,6 @@
       display: flex;
       align-items: center;
     }
-    
     .sidebar {
       height: calc(100vh - 5rem);
       overflow: scroll;
@@ -83,48 +82,38 @@
       transition: width 0.3s ease;
       position: relative;
       z-index: 10;
-      
       &.open {
         width: 320px;
       }
-      
       &.closed {
         width: 60px;
-        
         .panel-title {
           justify-content: center;
         }
-        
         .sidebar-toggle {
           margin: 0 auto;
         }
       }
-      
       .employee-list-container {
         display: flex;
         flex-direction: column;
         height: 100%;
         color: white;
-        
         .search-filter-container {
           padding: 12px;
           background-color: #444444;
-          
           .search-input {
             margin-bottom: 8px;
           }
-          
           .team-select {
             margin-top: 4px;
           }
         }
-        
         .employee-list {
           flex: 1;
           overflow-y: auto;
           padding: 12px;
           background-color: #333333;
-          
           .employee-list-item {
             padding: 8px;
             margin-bottom: 12px;
@@ -132,31 +121,25 @@
             cursor: move;
             transition: all 0.3s ease;
             background-color: #444444;
-            
             &:hover {
               box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
               transform: translateY(-2px);
             }
-            
             .employee-card-content {
               display: flex;
               align-items: center;
-              
               .employee-card-avatar {
                 border: 2px solid #555555;
                 margin-right: 12px;
               }
-              
               .employee-card-info {
                 flex: 1;
-                
                 .employee-name {
                   font-weight: 600;
                   margin-bottom: 2px;
                   color: white;
                   font-size: 0.95rem;
                 }
-                
                 .employee-designation, .employee-team {
                   color: rgba(255, 255, 255, 0.7);
                   font-size: 0.8rem;
@@ -170,7 +153,6 @@
         }
       }
     }
-    
     .main-content {
       flex: 1;
       overflow: auto;
@@ -178,10 +160,8 @@
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
       position: relative;
       border-left: 1px solid #e0e0e0;
-      
       .org-chart-container {
         position: relative;
-        
         .zoom-controls {
           position: absolute;
           top: 10px;
@@ -195,7 +175,6 @@
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
       }
-      
       .org-chart {
         min-width: 100%;
         display: flex;
@@ -207,7 +186,6 @@
           radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
         background-size: 20px 20px;
         background-position: 0 0, 10px 10px;
-        
         .org-chart-background {
           position: absolute;
           top: 50px;
@@ -216,7 +194,6 @@
           bottom: 0;
           z-index: 0;
         }
-        
         .org-node-container {
           display: flex;
           flex-direction: column;
@@ -224,7 +201,6 @@
           margin: 0 10px;
           position: relative;
           z-index: 1;
-          
           .org-node {
             display: flex;
             flex-direction: column;
@@ -235,44 +211,36 @@
             cursor: move;
             transition: all 0.3s;
             box-shadow: 0 4px 12px rgba(33, 150, 243, 0.1);
-            
             &:hover {
               box-shadow: 0 8px 16px rgba(33, 150, 243, 0.2);
               transform: translateY(-4px);
             }
-            
             .employee-avatar {
               margin-bottom: 8px;
-              
               .avatar-image {
                 border: 2px solid;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
               }
             }
-            
             .employee-info {
               text-align: center;
-              
               .employee-name {
                 font-weight: bold;
                 font-size: 0.9rem;
                 margin-bottom: 4px;
                 color: #333;
               }
-              
               .employee-designation {
                 color: #555;
                 font-size: 0.8rem;
                 margin-bottom: 4px;
               }
-              
               .team-chip {
                 margin-top: 2px;
                 font-size: 0.65rem;
               }
             }
           }
-          
           .org-children {
             display: flex;
             position: relative;
@@ -283,7 +251,6 @@
     }
   }
 }
-
 .org-node-container .org-children:before {
   content: '';
   position: absolute;
@@ -292,7 +259,6 @@
   width: 3px;
   height: 20px;
 }
-
 .org-node-container .org-children:after {
   content: '';
   position: absolute;
@@ -301,75 +267,60 @@
   right: 25%;
   height: 3px;
 }
-
 .org-node[data-team="Executive"] {
   border: 2px solid #4caf50;
   background: linear-gradient(to bottom, #ffffff, #f1f8e9);
-  
   .avatar-image {
     border-color: #4caf50 !important;
   }
 }
-
 .org-node[data-team="Engineering"] {
   border: 2px solid #2196f3;
   background: linear-gradient(to bottom, #ffffff, #e3f2fd);
-  
   .avatar-image {
     border-color: #2196f3 !important;
   }
 }
-
 .org-node[data-team="IT"] {
   border: 2px solid #9c27b0;
   background: linear-gradient(to bottom, #ffffff, #f3e5f5);
-  
   .avatar-image {
     border-color: #9c27b0 !important;
   }
 }
-
 .org-node[data-team="Finance"] {
   border: 2px solid #ff9800;
   background: linear-gradient(to bottom, #ffffff, #fff3e0);
-  
   .avatar-image {
     border-color: #ff9800 !important;
   }
 }
-
 .org-node[data-team="Executive"] + .org-children:before,
 .org-node[data-team="Executive"] + .org-children:after {
   background-color: #4caf50;
 }
-
 .org-node[data-team="Engineering"] + .org-children:before,
 .org-node[data-team="Engineering"] + .org-children:after {
   background-color: #2196f3;
 }
-
 .org-node[data-team="IT"] + .org-children:before,
 .org-node[data-team="IT"] + .org-children:after {
   background-color: #9c27b0;
 }
-
 .org-node[data-team="Finance"] + .org-children:before,
 .org-node[data-team="Finance"] + .org-children:after {
   background-color: #ff9800;
 }
-
 .org-node.dragging {
   opacity: 0.5;
   transform: scale(0.95);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
-
 .org-node.drop-target {
   background: linear-gradient(to bottom, #ffffff, #e8f5e9);
   border: 2px dashed #4caf50;
   animation: pulse 1.5s infinite;
 }
-
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
@@ -381,27 +332,22 @@
     box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
   }
 }
-
 @media (max-width: 992px) {
   .org-chart-layout {
     flex-direction: column;
-    
     .sidebar {
       width: 100% !important;
       max-height: 300px;
-      
       &.closed {
         height: 50px;
       }
     }
-    
     .main-content {
       border-left: none;
       border-top: 1px solid #e0e0e0;
     }
   }
 }
-
 // Update media query for smaller screens
 @media (max-width: 768px) {
   .org-chart-layout {
@@ -410,19 +356,16 @@
         .employee-list-item {
           padding: 6px;
           margin-bottom: 8px;
-          
           .employee-card-content {
             .employee-card-avatar {
               width: 30px;
               height: 30px;
               margin-right: 8px;
             }
-            
             .employee-card-info {
               .employee-name {
                 font-size: 0.85rem;
               }
-              
               .employee-designation,
               .employee-team {
                 font-size: 0.75rem;
@@ -434,14 +377,12 @@
     }
   }
 }
-
 // Add touch handling for mobile
 @media (hover: none) {
   .org-node {
     &:hover {
       transform: none !important;
     }
-    
     &:active {
       transform: translateY(-2px);
     }
@@ -450,7 +391,6 @@
 .MuiSnackbar-root {
   z-index: 1400;
 }
-
 @keyframes slideIn {
   0% {
     transform: translateY(20px);
@@ -461,7 +401,6 @@
     opacity: 1;
   }
 }
-
 @keyframes popAndSpin {
   0% {
     transform: scale(0) rotate(-90deg);
@@ -471,5 +410,124 @@
   }
   100% {
     transform: scale(1) rotate(0deg);
+  }
+}
+// ...
+// MacBook Air (M1/M2) and MacBook Pro 13" (2560 x 1600)
+@media screen and (min-width: 2560px) {
+  .org-chart-page {
+    .org-chart-layout {
+      .main-content {
+        .org-chart {
+          padding: 40px;
+          
+          .org-node-container {
+            margin: 0 20px;
+            
+            .org-node {
+              padding: 15px;
+              
+              .employee-info {
+                .employee-name {
+                  font-size: 1.1rem;
+                }
+                
+                .employee-designation {
+                  font-size: 0.9rem;
+                }
+                
+                .team-chip {
+                  font-size: 0.75rem;
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      .sidebar {
+        &.open {
+          width: 380px;
+        }
+        
+        .employee-list-container {
+          .employee-list-item {
+            padding: 12px;
+            
+            .employee-card-content {
+              .employee-card-info {
+                .employee-name {
+                  font-size: 1.1rem;
+                }
+                
+                .employee-designation,
+                .employee-team {
+                  font-size: 0.9rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// MacBook Pro 14" and 16" (3024 x 1964 and 3456 x 2234)
+@media screen and (min-width: 3024px) {
+  .org-chart-page {
+    .org-chart-layout {
+      .main-content {
+        .org-chart {
+          padding: 50px;
+          
+          .org-node-container {
+            margin: 0 25px;
+            
+            .org-node {
+              padding: 18px;
+              
+              .employee-info {
+                .employee-name {
+                  font-size: 1.2rem;
+                }
+                
+                .employee-designation {
+                  font-size: 1rem;
+                }
+                
+                .team-chip {
+                  font-size: 0.8rem;
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      .sidebar {
+        &.open {
+          width: 420px;
+        }
+      }
+    }
+  }
+}
+
+// Retina display optimizations
+@media screen and (-webkit-min-device-pixel-ratio: 2), 
+       screen and (min-resolution: 192dpi) {
+  .org-chart-page {
+    .org-chart-layout {
+      .main-content {
+        .org-chart {
+          background-size: 15px 15px;
+          
+          .org-node {
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.15);
+          }
+        }
+      }
+    }
   }
 }
