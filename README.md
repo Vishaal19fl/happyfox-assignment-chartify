@@ -28,7 +28,7 @@ Link to the specific assigned page : https://happyfox-chartify.vercel.app/chart-
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/chartify.git
+   git clone https://github.com/Vishaal19fl/happyfox-assignment-chartify.git
    cd chartify
    ```
 
